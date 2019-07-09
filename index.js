@@ -28,4 +28,4 @@ app.get('/', function(request, response) {
   response.sendStatus(200)
 })
 
-app.listen(port, () => console.log(`Listening to ${host}:${port}`))
+app.listen(process.env.PORT || port, () => console.log(`Listening on ${port}`))
