@@ -13,8 +13,6 @@ const host = 'localhost'
 
 
 const mongoose = require('mongoose')
-// const database = 'testdatabase'
-
 
 mongoose.connect(process.env.DB_HOST, (error) => {
   if (error) {
@@ -25,7 +23,8 @@ mongoose.connect(process.env.DB_HOST, (error) => {
 })
 
 app.get('/', function(request, response) {
-  response.sendStatus(200)
+  response.send('<h1>It Just Works</h1>')
+  // response.sendStatus(200)
 })
 
 app.listen(process.env.PORT || port, () => console.log(`Listening on ${port}`))
