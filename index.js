@@ -1,5 +1,7 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+
 
 const app = express()
 
@@ -11,10 +13,10 @@ const host = 'localhost'
 
 
 const mongoose = require('mongoose')
-const mongohost = 'localhost'
-const database = 'testdatabase'
+// const database = 'testdatabase'
 
-mongoose.connect(`mongodb://${mongohost}/${database}`, (error) => {
+
+mongoose.connect(process.env.DB_HOST, (error) => {
   if (error) {
     console.error("Error connecting to database.", error);
   } else {
