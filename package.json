@@ -1,0 +1,11 @@
+{
+  "name": "mern-assessment-server-file",
+  "version": "1.0.0",
+  "description": "This is the server file that will be used for our MERN assessment. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Glen Johnson, Post Raj Bista, Matt Leacy",
+  "license": "ISC"
+}
