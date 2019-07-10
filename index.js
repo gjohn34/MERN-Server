@@ -8,13 +8,9 @@ const app = express()
 //need to set up cors headers
 app.use(cors())
 
-const port = 4000
-const host = 'localhost'
-
-
 const mongoose = require('mongoose')
 
-mongoose.connect(process.env.DB_HOST, (error) => {
+mongoose.connect(process.env.DB_HOST || , (error) => {
   if (error) {
     console.error("Error connecting to database.", error);
   } else {
@@ -27,4 +23,4 @@ app.get('/', function(request, response) {
   // response.sendStatus(200)
 })
 
-app.listen(process.env.PORT || port, () => console.log(`Listening`))
+app.listen(process.env.PORT || 4000, () => console.log(`Listening`))
