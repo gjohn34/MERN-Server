@@ -10,7 +10,7 @@ app.use(cors())
 
 const mongoose = require('mongoose')
 
-mongoose.connect(process.env.DB_HOST || , (error) => {
+mongoose.connect(process.env.DB_HOST, (error) => {
   if (error) {
     console.error("Error connecting to database.", error);
   } else {
