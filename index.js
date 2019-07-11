@@ -28,36 +28,6 @@ mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true}, (error) => {
   }
 })
 
-app.get('/', async function(request, response) {
-  const docs = await User.find()
-  response.send(docs)
-  //keeping this as a test for future alterations
-})
-
-app.post('/user', function(request, response) {
-  const {
-    user_id,
-    username,
-    points
-  } = request.body
-  User.create({
-    user_id,
-    username,
-    points
-  })
-  .then(user => response.send(user))
-  .catch(error => response.status(500).send({
-    error: error.message
-  }))
-})
-
-app.delete('/user', function(request, response) {
-  const user_id = request.body.user_id
-  User.deleteOne({ user_id: user_id})
-    .then(result => {response.send(result)})
-    .catch(error => {response.status(500).send(error)})
-
-})
-
+app.use('/', require('./routes/route'))
 
 app.listen(process.env.PORT || 4000, () => console.log(`Listening`))
