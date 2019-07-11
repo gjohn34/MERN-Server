@@ -9,6 +9,11 @@ router.get('/', async function(request, response) {
   //keeping this as a test for future alterations
 })
 
+router.get('/users/:user_id', async function(request, response) {
+  const user =  await User.find({ user_id: request.params.userId})
+  response.send(user)
+})
+
 router.post('/users', function(request, response) {
   const {
     user_id,

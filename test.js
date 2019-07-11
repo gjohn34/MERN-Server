@@ -20,6 +20,8 @@ mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true}, (error) => {
 
 app.use(bodyParser.json());
 app.use('/', require('./routes/route'))
+TestUser = mongoose.model('TestUser', new mongoose.Schema({ user_id: String}))
+
 
 describe('GET /', function() {
   it('should return json object of users', function(done) {
@@ -27,11 +29,28 @@ describe('GET /', function() {
     request(app)
       .get('/')
       .expect('Content-Type', /json/)
-      .end(function(error, result) {
+      .end(function(error, response) {
         if (error) return done(error)
         done()
       })
       // .expect(200, done)
+  })
+})
+
+describe('GET /users/:user_id', function() {
+  it('should return json object of correct user', function(done) {
+    this.timeout(5000)
+    TestUser.create({ user_id: '1234'})
+
+    request(app)
+      .get('/users/1234')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .end(function(error, response) {
+        if (error) return done(error)
+        .expect(response.body.user_id == '1234')
+        done()
+      })
   })
 })
 
@@ -55,16 +74,15 @@ describe('POST /users', function() {
 describe('DELETE /users', function() {
   it('should remove a user from the database', function (done) {
     this.timeout(6000)
-    TestUser = mongoose.model('TestUser', new mongoose.Schema({ user_id: String}))
     TestUser.create({ user_id: '1234'})
 
     request(app)
       .delete('/users')
       .send({ user_id: 1234})
       .set('Accept', 'application/json')
-      .end(function(error, result) {
+      .end(function(error, response) {
         if (error) return done(error)
-        .expect(result.body.deletedCount == 1)
+        .expect(response.body.deletedCount == 1)
         done()
     })
   })
