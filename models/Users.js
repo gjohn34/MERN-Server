@@ -4,7 +4,6 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema({
   user_id: String,
   username: String,
-  discriminator: String,
   points: Number
 })
 
