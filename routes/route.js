@@ -39,4 +39,17 @@ router.delete('/users', async function(request, response) {
 
 })
 
+router.patch('/users/:user_id', async function(request, response) {
+  let user = await User.findOne({ user_id: request.params.user_id })
+  if (user) {
+    if (request.body.username) {
+      user.username = request.body.username
+      user.save()
+      response.send(user)
+    }
+  } else {
+    response.send(404)
+  }
+})
+
 module.exports = router
