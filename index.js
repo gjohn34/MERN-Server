@@ -30,11 +30,8 @@ mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true}, (error) => {
 
 app.get('/', async function(request, response) {
   const docs = await User.find()
-  // const doc = new Log({action: 'test', user: 'testUser', time: new Date})
-  // doc.save
-  // Log.create({action: 'test', user: 'testUser', time: new Date})
   response.send(docs)
-  // response.sendStatus(200)
+  //keeping this as a test for future alterations
 })
 
 app.post('/user', function(request, response) {
