@@ -10,6 +10,12 @@ app.use(cors())
 
 const mongoose = require('mongoose')
 
+const User = require('./models/Users')
+
+console.log(User);
+
+
+
 mongoose.connect(process.env.DB_HOST, (error) => {
   if (error) {
     console.error("Error connecting to database.", error);
