@@ -18,16 +18,30 @@ mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true}, (error) => {
 
 app.use('/', require('./routes/route'))
 
-describe('GET /', function() {
-  it('should return json object', function(done) {
-    this.timeout(100000)
+// describe('GET /', function() {
+//   it('should return json object', function(done) {
+//     this.timeout(3000)
+//     request(app)
+//       .get('/')
+//       .expect('Content-Type', /json/)
+//       .end(function(error, result) {
+//         if (error) return done(error)
+//         done()
+//       })
+//       // .expect(200, done)
+//   })
+// })
+
+describe('POST /user', function() {
+  it('should register a new user', function(done) {
     request(app)
-      .get('/')
+      request.body = { user_id: '1234', username: 'test', points: 10}
+      .post('/user')
+      .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .end(function(error, result) {
         if (error) return done(error)
         done()
-      })
-      // .expect(200, done)
+    })
   })
 })

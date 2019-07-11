@@ -9,7 +9,7 @@ router.get('/', async function(request, response) {
   //keeping this as a test for future alterations
 })
 
-router.post('/user', function(request, response) {
+router.post('/users', function(request, response) {
   const {
     user_id,
     username,
@@ -26,7 +26,7 @@ router.post('/user', function(request, response) {
   }))
 })
 
-router.delete('/user', function(request, response) {
+router.delete('/users', function(request, response) {
   const user_id = request.body.user_id
   User.deleteOne({ user_id: user_id})
     .then(result => {response.send(result)})
