@@ -10,7 +10,14 @@ app.use(cors())
 
 const mongoose = require('mongoose')
 
-mongoose.connect(process.env.DB_HOST, (error) => {
+const User = require('./models/Users')
+const Log = require('./models/Logs')
+
+// console.log(User.schema);
+// console.log(Log);
+
+
+mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true}, (error) => {
   if (error) {
     console.error("Error connecting to database.", error);
   } else {
@@ -19,8 +26,11 @@ mongoose.connect(process.env.DB_HOST, (error) => {
 })
 
 app.get('/', function(request, response) {
-  response.send('<h1>It Just Works</h1>')
-  // response.sendStatus(200)
+  // const doc = new Log({action: 'test', user: 'testUser', time: new Date})
+  // doc.save
+  // Log.create({action: 'test', user: 'testUser', time: new Date})
+  // response.send(doc)
+  response.sendStatus(200)
 })
 
 app.listen(process.env.PORT || 4000, () => console.log(`Listening`))
