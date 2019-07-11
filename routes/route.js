@@ -26,9 +26,9 @@ router.post('/users', function(request, response) {
   }))
 })
 
-router.delete('/users', function(request, response) {
+router.delete('/users', async function(request, response) {
   const user_id = request.body.user_id
-  User.deleteOne({ user_id: user_id})
+  await User.deleteOne({ user_id: user_id})
     .then(result => {response.send(result)})
     .catch(error => {response.status(500).send(error)})
 
