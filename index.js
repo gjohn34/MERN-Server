@@ -34,7 +34,7 @@ app.get('/', async function(request, response) {
   //keeping this as a test for future alterations
 })
 
-app.post('/user', function(request, response) {
+app.post('/users', function(request, response) {
   const {
     user_id,
     username,
@@ -51,7 +51,7 @@ app.post('/user', function(request, response) {
   }))
 })
 
-app.delete('/user', function(request, response) {
+app.delete('/users', function(request, response) {
   const user_id = request.body.user_id
   User.deleteOne({ user_id: user_id})
     .then(result => {response.send(result)})
