@@ -10,7 +10,7 @@ router.get('/', async function(request, response) {
 })
 
 router.get('/users/:user_id', async function(request, response) {
-  const user =  await User.find({ user_id: request.params.userId})
+  const user = await User.findOne({ user_id: request.params.user_id})
   response.send(user)
 })
 
@@ -25,7 +25,7 @@ router.post('/users', function(request, response) {
     username,
     points
   })
-  .then(user => response.send(user))
+  .then(user => {response.send(user)})
   .catch(error => response.status(500).send({
     error: error.message
   }))
