@@ -11,7 +11,11 @@ router.get('/', async function(request, response) {
 
 router.get('/users/:user_id', async function(request, response) {
   const user = await User.findOne({ user_id: request.params.user_id})
-  response.status(200).send(user)
+  if (user) {
+    response.status(200).send(user)
+  } else {
+    response.sendStatus(404)
+  }
 })
 
 router.post('/users', function(request, response) {
