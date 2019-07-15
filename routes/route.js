@@ -69,7 +69,7 @@ router.patch('/users/:user_id', async function(request, response) {
     }
     await user.save()
     await Log.create({
-      action: 'update' + (changes || ' nothing'),
+      action: 'update:' + (changes || ' nothing'),
       user: user.user_id,
       time: new Date
     })
