@@ -24,8 +24,10 @@ mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true}, (error) => {
 })
 
 app.use('/users', require('./routes/users'))
+app.use('/logs', require('./routes/logs'))
 
-router.get('/', async function(request, response) {
+
+app.get('/', async function(request, response) {
   const docs = await User.find()
   response.status(200).send(docs)
   //keeping this as a test for future alterations

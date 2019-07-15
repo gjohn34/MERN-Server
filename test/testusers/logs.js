@@ -1,53 +1,13 @@
-require('dotenv').config()
-//
 const assert = require('assert')
-const mongoose = require('mongoose')
-const TestUser = require('../models/Users')
-const TestLog = require('../models/Logs')
+const TestUser = require('../../models/Users')
+const TestLog = require('../../models/Logs')
 const express = require('express')
 const app = express()
 const request = require('supertest')
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json());
-app.use('/users', require('../routes/users'))
-
-mongoose.connect(process.env.DB_TEST_HOST, {useNewUrlParser: true}, (error) => {
-  if (error) {
-    console.error("Error connecting to database.", error);
-  } else {
-    console.log("Connected to database");
-  }
-})
-
-after(() => { mongoose.connection.close() })
-
-beforeEach(async function() {
-  await TestUser.create({user_id: '1234'});
-  // await TestLog.create({action: 'new', user: '1234', time: new Date});
-});
-
-afterEach(async function() {
-  await TestUser.deleteMany({});
-  await TestLog.deleteMany({});
-})
-
-describe('basics', function () {
-  it('should equal 2', function () {
-    assert.equal(1+1, 2)
-  });
-  it('should equal 4', function () {
-    assert.equal(2+2, 4)
-  });
-});
-
-describe('finding', function() {
-  it('should find a user', async function() {
-    const docs = await TestUser.findOne()
-    assert.equal(docs.user_id, '1234')
-    assert.notEqual(TestUser.countDocuments(), 0)
-  })
-})
+app.use('/users', require('../../routes/users'))
 
 describe('POST /users', function () {
   context('creating a new user should add a log file', function () {
