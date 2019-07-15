@@ -1,53 +1,13 @@
-require('dotenv').config()
-//
 const assert = require('assert')
-const mongoose = require('mongoose')
-const TestUser = require('../models/Users')
+const TestUser = require('../../models/Users')
+const TestLog = require('../../models/Logs')
 const express = require('express')
 const app = express()
 const request = require('supertest')
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json());
-app.use('/', require('../routes/route'))
-
-mongoose.connect(process.env.DB_TEST_HOST, {useNewUrlParser: true}, (error) => {
-  if (error) {
-    console.error("Error connecting to database.", error);
-  } else {
-    console.log("Connected to database");
-  }
-})
-
-after(() => { mongoose.connection.close() })
-
-// app.listen(process.env.PORT || 4000, () => console.log(`Listening`))
-
-beforeEach(async function() {
-  await TestUser.create({user_id: '1234'})
-});
-
-afterEach(async function() {
-  await TestUser.deleteMany({})
-})
-
-
-describe('basics', function () {
-  it('should equal 2', function () {
-    assert.equal(1+1, 2)
-  });
-  it('should equal 4', function () {
-    assert.equal(2+2, 4)
-  });
-});
-
-describe('finding', function() {
-  it('should find a user', async function() {
-    const docs = await TestUser.findOne()
-    assert.equal(docs.user_id, '1234')
-    assert.notEqual(TestUser.countDocuments(), 0)
-  })
-})
+app.use('/users', require('../../routes/users'))
 
 describe('GET /users/:user_id', function() {
   context('user does not exist', function() {
@@ -99,8 +59,7 @@ describe('DELETE /users', function () {
   context('user exists in db', function () {
     it('should return a delete count of 1', function (done) {
       request(app)
-        .delete('/users')
-        .send({ user_id: '1234'})
+        .delete('/users/1234')
         .expect(200)
         .end(function(error, response) {
           if (error) return done(error)
@@ -112,8 +71,7 @@ describe('DELETE /users', function () {
   context('user does not exist', function () {
     it('should return a delete count of 0', function (done) {
       request(app)
-        .delete('/users')
-        .send({ user_id: '5678'})
+        .delete('/users/5678')
         .expect(404)
         .end(function(error, response) {
           if (error) return done(error)

@@ -4,13 +4,7 @@ const router = express.Router()
 const User = require('../models/Users')
 const Log = require('../models/Logs')
 
-router.get('/', async function(request, response) {
-  const docs = await User.find()
-  response.status(200).send(docs)
-  //keeping this as a test for future alterations
-})
-
-router.get('/users/:user_id', async function(request, response) {
+router.get('/:user_id', async function(request, response) {
   const user = await User.findOne({ user_id: request.params.user_id})
   if (user) {
     response.status(200).send(user)
@@ -19,7 +13,7 @@ router.get('/users/:user_id', async function(request, response) {
   }
 })
 
-router.post('/users', async function(request, response) {
+router.post('/', async function(request, response) {
   const {
     user_id,
     username,
@@ -38,8 +32,8 @@ router.post('/users', async function(request, response) {
   response.status(200).send(user)
 })
 
-router.delete('/users', async function(request, response) {
-  const user_id = request.body.user_id
+router.delete('/:user_id', async function(request, response) {
+  const user_id = request.params.user_id
   const user = await User.deleteOne({
     user_id: user_id
   })
@@ -55,7 +49,7 @@ router.delete('/users', async function(request, response) {
   }
 })
 
-router.patch('/users/:user_id', async function(request, response) {
+router.patch('/:user_id', async function(request, response) {
   let user = await User.findOne({ user_id: request.params.user_id })
   if (user != null) {
     let changes = ''
