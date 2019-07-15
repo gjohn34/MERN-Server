@@ -33,87 +33,115 @@ afterEach(async function() {
   await TestLog.deleteMany({});
 })
 
-describe('basics', function () {
-  it('should equal 2', function () {
-    assert.equal(1+1, 2)
-  });
-  it('should equal 4', function () {
-    assert.equal(2+2, 4)
-  });
-});
+// describe('basics', function () {
+//   it('should equal 2', function () {
+//     assert.equal(1+1, 2)
+//   });
+//   it('should equal 4', function () {
+//     assert.equal(2+2, 4)
+//   });
+// });
+//
+// describe('finding', function() {
+//   it('should find a user', async function() {
+//     const docs = await TestUser.findOne()
+//     assert.equal(docs.user_id, '1234')
+//     assert.notEqual(TestUser.countDocuments(), 0)
+//   })
+// })
+//
+// describe('POST /users', function () {
+//   context('creating a new user should add a log file', function () {
+//     it('should create a log with user data',  function (done) {
+//       request(app)
+//         .post('/users')
+//         .send({ user_id: '5678', username: 'test', points: '1' })
+//         .expect(200)
+//         .end(async function(error, response) {
+//           if (error) return done(error)
+//           const logs = await TestLog.find({})
+//           assert.equal(logs.length, 1)
+//           assert.equal(logs[0].action, 'new')
+//           assert.equal(logs[0].user, '5678')
+//           done()
+//       })
+//     });
+//   })
+//   context('user already exists', function () {
+//     it('should throw an error and not create a log', function (done) {
+//       request(app)
+//         .post('/users')
+//         .send({ user_id: '1234'})
+//         .expect(500)
+//         .end(async function(error, response) {
+//           if (error) return done(error)
+//           const logs = await TestLog.find({})
+//           assert.equal(logs.length, 0)
+//           done()
+//       })
+//     });
+//   });
+// });
+//
+// describe('DELETE /users', function () {
+//   context('user exists', function () {
+//     it('should create a log with user data', function (done) {
+//       request(app)
+//         .delete('/users')
+//         .send({ user_id: '1234'})
+//         .expect(200)
+//         .end(async function(error, response) {
+//           if (error) return done(error)
+//           const logs = await TestLog.find({})
+//           assert.equal(logs.length, 1)
+//           done()
+//       })
+//     });
+//   });
+//   context('user does not exist', function () {
+//     it('should return an error and not create a log', function (done) {
+//       request(app)
+//         .delete('/users')
+//         .send({ user_id: '5678'})
+//         .expect(404)
+//         .end(async function(error, response) {
+//           if (error) return done(error)
+//           const logs = await TestLog.find({})
+//           assert.equal(logs.length, 0)
+//           done()
+//         })
+//     });
+//   });
+// });
 
-describe('finding', function() {
-  it('should find a user', async function() {
-    const docs = await TestUser.findOne()
-    assert.equal(docs.user_id, '1234')
-    assert.notEqual(TestUser.countDocuments(), 0)
-  })
-})
-
-describe('POST /users', function () {
-  context('creating a new user should add a log file', function () {
-    it('should create a log with user data',  function (done) {
+describe('/PATCH /user/:user_id', function () {
+  context('user exists but no data passed', function () {
+    it('should create a log with no change', function (done) {
       request(app)
-        .post('/users')
-        .send({ user_id: '5678', username: 'test', points: '1' })
+        .patch('/users/1234')
         .expect(200)
-        .end(async function(error, response) {
+        .end(async function(error, reponse) {
           if (error) return done(error)
           const logs = await TestLog.find({})
           assert.equal(logs.length, 1)
-          assert.equal(logs[0].action, 'new')
-          assert.equal(logs[0].user, '5678')
-          done()
-      })
-    });
-  })
-  context('user already exists', function () {
-    it('should throw an error and not create a log', function (done) {
-      request(app)
-        .post('/users')
-        .send({ user_id: '1234'})
-        .expect(500)
-        .end(async function(error, response) {
-          if (error) return done(error)
-          const logs = await TestLog.find({})
-          assert.equal(logs.length, 0)
+          assert.equal(logs[0].action, 'update nothing')
           done()
       })
     });
   });
-});
-
-describe('DELETE /users', function () {
-  context('user exists', function () {
+  context('user exists with valid data', function () {
     it('should create a log with user data', function (done) {
       request(app)
-        .delete('/users')
-        .send({ user_id: '1234'})
-        .expect(200)
-        .end(async function(error, response) {
-          if (error) return done(error)
-          const logs = await TestLog.find({})
-          assert.equal(logs.length, 1)
-          done()
+      .patch('/users/1234')
+      .send({ username: 'test' })
+      .expect(200)
+      .end(async function(error, response) {
+        if (error) return done(error)
+        const logs = await TestLog.find({})
+        assert.equal(logs.length, 1)
+        assert.equal(logs[0].action, 'update username')
+        done()
       })
     });
   });
-  context('user does not exist', function () {
-    it('should return an error and not create a log', function (done) {
-      request(app)
-        .delete('/users')
-        .send({ user_id: '5678'})
-        .expect(404)
-        .end(async function(error, response) {
-          if (error) return done(error)
-          const logs = await TestLog.find({})
-          assert.equal(logs.length, 0)
-          done()
-        })
-    });
-  });
-});
-
-describe('description', function () {
-
 });

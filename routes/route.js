@@ -58,13 +58,21 @@ router.delete('/users', async function(request, response) {
 router.patch('/users/:user_id', async function(request, response) {
   let user = await User.findOne({ user_id: request.params.user_id })
   if (user != null) {
+    let changes = ''
     if (request.body.username) {
       user.username = request.body.username
+      changes += ' username'
     }
     if (request.body.points) {
       user.points = request.body.points
+      changes += ' points'
     }
     await user.save()
+    await Log.create({
+      action: 'update' + (changes || ' nothing'),
+      user: user.user_id,
+      time: new Date
+    })
     response.send(user)
   } else {
     response.sendStatus(404)
