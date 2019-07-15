@@ -115,7 +115,7 @@ describe('DELETE /users', function () {
       request(app)
         .delete('/users')
         .send({ user_id: '5678'})
-        .expect(200)
+        .expect(404)
         .end(function(error, response) {
           if (error) return done(error)
           assert.equal(response.body.deletedCount, '0')

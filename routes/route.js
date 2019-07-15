@@ -42,14 +42,17 @@ router.delete('/users', async function(request, response) {
   const user_id = request.body.user_id
   const user = await User.deleteOne({
     user_id: user_id
-  }).catch(error => {response.status(500).send(error)})
-  await Log.create({
-    action: 'delete',
-    user: user_id,
-    time: new Date
   })
-  response.status(200).send(user)
-
+  if (user.deletedCount == 0) {
+    response.status(404).send(user)
+  } else {
+    await Log.create({
+      action: 'delete',
+      user: user_id,
+      time: new Date
+    })
+    response.status(200).send(user)
+  }
 })
 
 router.patch('/users/:user_id', async function(request, response) {
@@ -67,42 +70,5 @@ router.patch('/users/:user_id', async function(request, response) {
     response.sendStatus(404)
   }
 })
-//   try {
-//     let user = await User.findOne({ user_id: request.params.user_id })
-//   } catch (error) {
-//     response.status(404).send(error)
-//   } finally {
-//     if (request.body.username) {
-//       user.username = request.body.username
-//       console.log('changed username');
-//     }
-//     if (request.body.points) {
-//       user.points = request.body.points
-//       console.log('changed points');
-//     }
-//     user.save()
-//     console.log('saving');
-//     response.send(user)
-//   }
-// })
-  // let user = await User.findOne({ user_id: request.params.user_id }, function(error) {
-  //   if (error) return response.status(404).send(error)
-  // })
-  // if (user) {
-  //   if (request.body.username) {
-  //     user.username = request.body.username
-  //     console.log('changed username');
-  //   }
-  //   if (request.body.points) {
-  //     user.points = request.body.points
-  //     console.log('changed points');
-  //   }
-  //   user.save()
-  //   console.log('saving');
-  //   response.send(user)
-  // } else {
-  //   response.sendStatus(404)
-  // }
-// })
 
 module.exports = router

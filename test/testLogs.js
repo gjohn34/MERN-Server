@@ -98,12 +98,22 @@ describe('DELETE /users', function () {
       })
     });
   });
-//   context('user does not exist', function () {
-//     it('should return an error', function (done) {
-//       // request(app)
-//
-//
-//     });
-//
-//   });
+  context('user does not exist', function () {
+    it('should return an error and not create a log', function (done) {
+      request(app)
+        .delete('/users')
+        .send({ user_id: '5678'})
+        .expect(404)
+        .end(async function(error, response) {
+          if (error) return done(error)
+          const logs = await TestLog.find({})
+          assert.equal(logs.length, 0)
+          done()
+        })
+    });
+  });
+});
+
+describe('description', function () {
+
 });
