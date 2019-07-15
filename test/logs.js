@@ -10,7 +10,7 @@ const request = require('supertest')
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json());
-app.use('/', require('../routes/route'))
+app.use('/users', require('../routes/users'))
 
 mongoose.connect(process.env.DB_TEST_HOST, {useNewUrlParser: true}, (error) => {
   if (error) {
