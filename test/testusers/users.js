@@ -59,8 +59,7 @@ describe('DELETE /users', function () {
   context('user exists in db', function () {
     it('should return a delete count of 1', function (done) {
       request(app)
-        .delete('/users')
-        .send({ user_id: '1234'})
+        .delete('/users/1234')
         .expect(200)
         .end(function(error, response) {
           if (error) return done(error)
@@ -72,8 +71,7 @@ describe('DELETE /users', function () {
   context('user does not exist', function () {
     it('should return a delete count of 0', function (done) {
       request(app)
-        .delete('/users')
-        .send({ user_id: '5678'})
+        .delete('/users/5678')
         .expect(404)
         .end(function(error, response) {
           if (error) return done(error)

@@ -32,8 +32,8 @@ router.post('/', async function(request, response) {
   response.status(200).send(user)
 })
 
-router.delete('/', async function(request, response) {
-  const user_id = request.body.user_id
+router.delete('/:user_id', async function(request, response) {
+  const user_id = request.params.user_id
   const user = await User.deleteOne({
     user_id: user_id
   })

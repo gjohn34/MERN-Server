@@ -46,8 +46,7 @@ describe('DELETE /users', function () {
   context('user exists', function () {
     it('should create a log with user data', function (done) {
       request(app)
-        .delete('/users')
-        .send({ user_id: '1234'})
+        .delete('/users/1234')
         .expect(200)
         .end(async function(error, response) {
           if (error) return done(error)
