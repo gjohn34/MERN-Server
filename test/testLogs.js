@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 const TestUser = require('../models/Users')
 const TestLog = require('../models/Logs')
 const express = require('express')
-const cors = require('cors')
 const app = express()
 const request = require('supertest')
 const bodyParser = require('body-parser')
@@ -114,6 +113,43 @@ describe('DELETE /users', function () {
   });
 });
 
-describe('description', function () {
-
+describe('/PATCH /user/:user_id', function () {
+  context('user exists but no data passed', function () {
+    it('should create a log with no change', function (done) {
+      request(app)
+        .patch('/users/1234')
+        .expect(200)
+        .end(async function(error, reponse) {
+          if (error) return done(error)
+          const logs = await TestLog.find({})
+          assert.equal(logs.length, 1)
+          assert.equal(logs[0].action, 'update: nothing')
+          done()
+      })
+    });
+  });
+  context('user exists with valid data', function () {
+    it('should create a log with user data', function (done) {
+      request(app)
+      .patch('/users/1234')
+      .send({ username: 'test', points: '50' })
+      .expect(200)
+      .end(async function(error, response) {
+        if (error) return done(error)
+        const logs = await TestLog.find({})
+        assert.equal(logs.length, 1)
+        assert.equal(logs[0].action, 'update: username points')
+        assert.equal(logs[0].user, '1234')
+        done()
+      })
+    });
+  });
+  context('user does not exist', function() {
+    it('should return 404 with no log', function (done) {
+      request(app)
+        .patch('/users/5678')
+        .send({ username: 'test', points: '100'})
+        .expect(404, done)
+    });
+  })
 });
