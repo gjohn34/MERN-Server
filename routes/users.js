@@ -76,6 +76,8 @@ router.patch('/:user_id', async function(request, response) {
 router.patch('/:user_id/points', async function(request, response) {
   let user = await User.findOne({ user_id: request.params.user_id })
   if (user != null) {
+    user.points += request.body.points
+    await user.save()
     response.sendStatus(200)
   } else {
     response.sendStatus(404)
