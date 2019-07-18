@@ -144,9 +144,19 @@ describe('Checking to see if a user is created or not', function () {
   describe('PATCH /users/:user_id/points', function () {
     context('user exists', function () {
       it('should return ok', function (done) {
-        request(app)
-          .patch('/users/1234/points')
-          .expect(200, done)
+        TestUser.updateOne({ user_id: '1234' }, { points: 10 }).then(() => {
+          request(app)
+            .patch('/users/1234/points')
+            .send({ points: 10 })
+            .expect(200)
+            .end(function(error, response) {
+              if (error) return done(error)
+              const user = TestUser.findOne({ user_id: '1234' }).then(user => {
+                assert.equal(user.points, 20)
+                done()
+            })
+          })
+        })
       });
     });
     context('user does not exist', function () {
