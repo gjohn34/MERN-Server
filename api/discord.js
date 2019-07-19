@@ -34,7 +34,7 @@ router.get('/callback', async function(request, response) {
     });
   const jsonUserData = await userData.json()
   if (jsonUserData.id == '365065121149485058' || '258952189685399554' ) {
-    response.cookie('rememberme', '1', { domain: 'elated-lovelace-d9b735.netlify.com', expires: new Date(Date.now() + 900000), httpOnly: false })
+    response.cookie('rememberme', '1', { domain: '.elated-lovelace-d9b735.netlify.com', expires: new Date(Date.now() + 900000), httpOnly: false })
     response.redirect('https://elated-lovelace-d9b735.netlify.com/api/discord/confirmed')
   } else {
     response.sendStatus(401)
