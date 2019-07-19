@@ -5,7 +5,8 @@ const btoa = require('btoa')
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const redirect = encodeURIComponent('http://localhost:5000/api/discord/callback');
+// const FRONT_END_CALLBACK = process.env.FRONT_END_URL
+const redirect = encodeURIComponent('https://stormy-tundra-35633.herokuapp.com/api/discord/callback');
 
 router.get('/login', (req, res) => {
   res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${CLIENT_ID}&scope=identify&response_type=code&redirect_uri=${redirect}`);
@@ -34,7 +35,7 @@ router.get('/callback', async function(request, response) {
   const jsonUserData = await userData.json()
   if (jsonUserData.id == '365065121149485058') {
     response.cookie('rememberme', '1', { expires: new Date(Date.now() + 900000), httpOnly: false })
-    response.redirect('http://localhost:4000/api/discord/confirmed')
+    response.redirect('http://localhost:3000/api/discord/confirmed')
   } else {
     response.sendStatus(401)
   }
