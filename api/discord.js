@@ -35,7 +35,7 @@ router.get('/callback', async function(request, response) {
   const jsonUserData = await userData.json()
   if (jsonUserData.id == '365065121149485058') {
     response.cookie('rememberme', '1', { expires: new Date(Date.now() + 900000), httpOnly: false })
-    response.redirect('http://localhost:3000/api/discord/confirmed')
+    response.redirect('https://elated-lovelace-d9b735.netlify.com/api/discord/confirmed')
   } else {
     response.sendStatus(401)
   }
