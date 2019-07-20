@@ -3,11 +3,21 @@ const router = express.Router()
 
 const AuthUser = require('../models/AuthUsers')
 
-router.post('/new', function(request, response) {
+router.get('/', async function(request, response) {
+  const authUsers = await AuthUser.find()
+  response.send(authUsers)
+})
+
+
+router.post('/', function(request, response) {
   const newAuthUser = AuthUser.create({
-    user_id: request.body.user_id
+    user_id: request.body.user_id,
+    username: request.body.username
   }).then(result => {
     response.status(200).send(result)
+  }).catch(error => {
+    console.log(error);
+    response.status(500).send(error)
   })
 })
 
