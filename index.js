@@ -17,27 +17,26 @@ const app = express()
 //   }
 // }
 
-// const corsOptions = {
-//   origin: [
-//     'https://elated-lovelace-d9b735.netlify.com/',
-//     'https://stormy-tundra-35633.herokuapp.com/',
-//     'https://supermarche-croissant-13272.herokuapp.com/',
-//     /(http(s)?:\/\/)?(elated-lovelace-d9b735\.netlify\.com+\/).{0,}/
-//   ],
-//   allowedHeaders: ['Content-Type', 'application/json']
-//
-// }
-
-var whitelist = ['https://elated-lovelace-d9b735.netlify.com', 'https://elated-lovelace-d9b735.netlify.com/api/discord/login', 'https://supermarche-croissant-13272.herokuapp.com/', 'https://stormy-tundra-35633.herokuapp.com/', 'https://discordapp.com' ]
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
+const corsOptions = {
+  origin: [
+    'https://elated-lovelace-d9b735.netlify.com/',
+    'https://stormy-tundra-35633.herokuapp.com/',
+    'https://supermarche-croissant-13272.herokuapp.com/',
+  ],
+  allowedHeaders: ['Content-Type', 'application/json']
 }
+// /(http(s)?:\/\/)?(elated-lovelace-d9b735\.netlify\.com+\/).{0,}/
+
+// var whitelist = ['https://elated-lovelace-d9b735.netlify.com', 'https://supermarche-croissant-13272.herokuapp.com/', 'https://stormy-tundra-35633.herokuapp.com/', 'https://discordapp.com' ]
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
 
 
 
