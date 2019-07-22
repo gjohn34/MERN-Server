@@ -23,7 +23,8 @@ const corsOptions = {
     'https://stormy-tundra-35633.herokuapp.com/',
     'https://supermarche-croissant-13272.herokuapp.com/',
   ],
-  allowedHeaders: ['Content-Type', 'application/json']
+  allowedHeaders: ['Content-Type', 'application/json'],
+  methods: ['GET', 'PATCH', 'POST', 'DELETE']
 }
 // /(http(s)?:\/\/)?(elated-lovelace-d9b735\.netlify\.com+\/).{0,}/
 
