@@ -16,7 +16,6 @@ router.post('/', function(request, response) {
   }).then(result => {
     response.status(200).send(result)
   }).catch(error => {
-    console.log(error);
     response.status(500).send(error)
   })
 })
