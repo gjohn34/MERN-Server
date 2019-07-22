@@ -28,7 +28,7 @@ const app = express()
 //
 // }
 
-var whitelist = ['https://elated-lovelace-d9b735.netlify.com', 'https://supermarche-croissant-13272.herokuapp.com/', 'https://stormy-tundra-35633.herokuapp.com/' ]
+var whitelist = ['https://elated-lovelace-d9b735.netlify.com', 'https://supermarche-croissant-13272.herokuapp.com/', 'https://stormy-tundra-35633.herokuapp.com/', 'https://discordapp.com' ]
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
