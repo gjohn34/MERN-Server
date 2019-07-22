@@ -22,7 +22,8 @@ const corsOptions = {
   origin: [
     'https://elated-lovelace-d9b735.netlify.com/',
     'https://supermarche-croissant-13272.herokuapp.com/',
-    /\.elated-lovelace-d9b735.netlify\.com$/]
+    /(http(s)?:\/\/)?(elated-lovelace-d9b735\.netlify\.com+\/).{0,}/
+  ]
 }
 
 
