@@ -20,17 +20,19 @@ describe('checking if an auth user is created', function () {
             assert.equal(response.body.length, 1)
             done()
           })
+        });
       });
-    });
     context('authUsers do not exist', function () {
       it('should return 0 users', function (done) {
-        request(app)
-          .get('/authUsers')
-          .expect(200)
-          .end(function(error, response) {
-            if (error) return done(error)
-            assert.equal(response.body.length, 0)
-            done()
+        TestAuthUser.deleteMany().then(() => {
+          request(app)
+            .get('/authUsers')
+            .expect(200)
+            .end(function(error, response) {
+              if (error) return done(error)
+              assert.equal(response.body.length, 0)
+              done()
+          })
         })
       });
     });

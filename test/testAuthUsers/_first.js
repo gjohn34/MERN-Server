@@ -18,7 +18,7 @@ beforeEach(async function() {
 });
 
 afterEach(async function() {
-  await TestAuthUser.deleteMany({});
+  await TestAuthUser.deleteMany();
 })
 
 describe('basics', function () {
