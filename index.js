@@ -5,20 +5,20 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const app = express()
 
-var whitelist = ['https://elated-lovelace-d9b735.netlify.com', 'https://supermarche-croissant-13272.herokuapp.com/', ]
-// uncomment when working local
-// whitelist.push('http://localhost:3000')
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-
-app.use(cors(corsOptions))
+// var whitelist = ['https://elated-lovelace-d9b735.netlify.com', 'https://supermarche-croissant-13272.herokuapp.com/', ]
+// // uncomment when working local
+// // whitelist.push('http://localhost:3000')
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
+//
+// app.use(cors(corsOptions))
 app.use(bodyParser.json())
 
 app.use('/api/discord', require('./api/discord'));
