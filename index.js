@@ -42,7 +42,7 @@ var corsOptions = {
 
 
 app.use(cors(corsOptions))
-app.use('/api/discord/login', cors()
+app.use('/api/discord/login', cors())
 
 app.use(bodyParser.json())
 
