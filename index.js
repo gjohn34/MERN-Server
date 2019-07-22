@@ -28,20 +28,20 @@ const app = express()
 //
 // }
 
-var whitelist = ['https://elated-lovelace-d9b735.netlify.com', 'https://supermarche-croissant-13272.herokuapp.com/', 'https://stormy-tundra-35633.herokuapp.com/' ]
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
+// var whitelist = ['https://elated-lovelace-d9b735.netlify.com', 'https://supermarche-croissant-13272.herokuapp.com/', 'https://stormy-tundra-35633.herokuapp.com/' ]
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
 
 
 
-app.use(cors(corsOptions))
+app.use(cors())
 
 app.use(bodyParser.json())
 
