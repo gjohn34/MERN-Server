@@ -5,42 +5,6 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const app = express()
 
-// // uncomment when working local
-// // whitelist.push('http://localhost:3000')
-// var corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
-
-// const corsOptions = {
-//   origin: [
-//     'https://elated-lovelace-d9b735.netlify.com/',
-//     'https://stormy-tundra-35633.herokuapp.com/',
-//     'https://supermarche-croissant-13272.herokuapp.com/',
-//     /(http(s)?:\/\/)?(elated-lovelace-d9b735\.netlify\.com+\/).{0,}/
-//   ],
-//   allowedHeaders: ['Content-Type', 'application/json']
-//
-// }
-
-// var whitelist = ['https://elated-lovelace-d9b735.netlify.com', 'https://supermarche-croissant-13272.herokuapp.com/', 'https://stormy-tundra-35633.herokuapp.com/' ]
-// var corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
-
-
-
 app.use(cors())
 
 app.use(bodyParser.json())
