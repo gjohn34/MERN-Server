@@ -20,11 +20,12 @@ const app = express()
 
 const corsOptions = {
   origin: [
-    'https://elated-lovelace-d9b735.netlify.com/*',
-    'https://stormy-tundra-35633.herokuapp.com/*',
+    'https://elated-lovelace-d9b735.netlify.com/',
+    'https://stormy-tundra-35633.herokuapp.com/',
     'https://supermarche-croissant-13272.herokuapp.com/',
     /(http(s)?:\/\/)?(elated-lovelace-d9b735\.netlify\.com+\/).{0,}/
   ],
+  allowedHeaders: ['Content-Type', 'application/json']
 
 }
 
