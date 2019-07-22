@@ -4,6 +4,7 @@ const fetch = require('node-fetch')
 const btoa = require('btoa')
 const jwt = require('jsonwebtoken')
 const AuthUser = require('../models/AuthUsers')
+const cors = require('cors')
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -11,7 +12,7 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 // const redirect = encodeURIComponent('https://stormy-tundra-35633.herokuapp.com/api/discord/callback');
 const redirect = encodeURIComponent('https://stormy-tundra-35633.herokuapp.com/api/discord/callback');
 
-router.get('/login', (req, res) => {
+router.get('/login', cors(), (req, res) => {
   res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${CLIENT_ID}&scope=identify&response_type=code&redirect_uri=${redirect}`);
 });
 
