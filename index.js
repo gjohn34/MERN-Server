@@ -22,7 +22,8 @@ const corsOptions = {
   origin: [
     'https://elated-lovelace-d9b735.netlify.com/*',
     'https://stormy-tundra-35633.herokuapp.com/*',
-    'https://supermarche-croissant-13272.herokuapp.com/*',
+    'https://supermarche-croissant-13272.herokuapp.com/',
+    /(http(s)?:\/\/)?(elated-lovelace-d9b735\.netlify\.com+\/).{0,}/
   ],
 
 }
@@ -30,7 +31,7 @@ const corsOptions = {
 
 
 
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
 
 app.use('/api/discord', require('./api/discord'));
