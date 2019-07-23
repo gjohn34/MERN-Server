@@ -7,14 +7,20 @@ const AuthUser = require('../models/AuthUsers')
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-// const FRONT_END_CALLBACK = process.env.FRONT_END_URL
-// const redirect = encodeURIComponent('https://stormy-tundra-35633.herokuapp.com/api/discord/callback');
 const redirect = encodeURIComponent('https://stormy-tundra-35633.herokuapp.com/api/discord/callback');
 
+
+// From the front end, when a user is trying to access the admin dashboard they are redirected to /api/discord/login. We take our user to discord's
+// OAuth2 authentification site. The user allows access then are again redirected to /api/discord/callback (encoded above and into the URL)
 router.get('/login', (req, res) => {
   res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${CLIENT_ID}&scope=identify&response_type=code&redirect_uri=${redirect}`);
 });
 
+//Fun Stuff. We are expecting a code to be provided in the request object, if there isn't (ie someone comes directly to the page
+// without going through OAuth first) we throw an error. If that code IS there, we take the code and our b64 encoded credentials (CLIENT ID & SECRET)
+// and post to the discord API a request for information. If our credentials match what was provided to Discord through the users authorization we are
+// sent a data object back that we convert to json.
+//
 router.get('/callback', async function(request, response) {
   if (!request.query.code) throw new Error('NoCodeProvided')
   const code = request.query.code;
@@ -36,10 +42,15 @@ router.get('/callback', async function(request, response) {
       }
     });
   const jsonUserData = await userData.json()
-  ////fix this please
+
+// with the json data, we compare the ID against our database of authorized users. if they match the user we create a JWT
+// and redirect the user back to the react front end with the JWT where it will be decoded and the user allowed in.
+// If no matches a 404 is returned..
+
   const authorizedUsers = await AuthUser.find()
   authorizedUsers.forEach(function(adminUser) {
     if (jsonUserData.id == adminUser.user_id) {
+      ////fix this please
       const webtoken = jwt.sign({authorized: true}, 'superSecretKey')
       response.redirect(`https://elated-lovelace-d9b735.netlify.com/api/discord/confirmed/${webtoken}`)
     }
