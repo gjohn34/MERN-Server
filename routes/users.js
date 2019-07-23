@@ -4,6 +4,8 @@ const router = express.Router()
 const User = require('../models/Users')
 const Log = require('../models/Logs')
 
+
+//Route to GET /users/1234. Bot will make an API call on the user to get their ID/username/points
 router.get('/:user_id', async function(request, response) {
   const user = await User.findOne({ user_id: request.params.user_id})
   if (user) {
@@ -13,6 +15,8 @@ router.get('/:user_id', async function(request, response) {
   }
 })
 
+// Route for POSTing /users/. Function collects info from the body, creates
+// a new AuthUser. A new log is also created then returns either the new user or an error if that user already exists.
 router.post('/', async function(request, response) {
   const {
     user_id,
@@ -32,6 +36,8 @@ router.post('/', async function(request, response) {
   response.status(200).send(user)
 })
 
+// Route to DELETE /users/123456. Function takes the ID from params and deletes the matching user
+// then a log item is created. Confirmation sent back.
 router.delete('/:user_id', async function(request, response) {
   const user_id = request.params.user_id
   const user = await User.deleteOne({
@@ -49,6 +55,8 @@ router.delete('/:user_id', async function(request, response) {
   }
 })
 
+// Route to PATCH /users/1234. Function takes the params and finds the user. Depending on what has been
+// sent in the request, the user is changed and a new log item is created with those change details.
 router.patch('/:user_id', async function(request, response) {
   let user = await User.findOne({ user_id: request.params.user_id })
   if (user != null) {
@@ -73,6 +81,8 @@ router.patch('/:user_id', async function(request, response) {
   }
 })
 
+// Route to PATCH /users/1234/points. This is for an API call the bot will make when a user
+// message is liked or when they make a new message. The user is found and their points are adjusted.
 router.patch('/:user_id/points', async function(request, response) {
   let user = await User.findOne({ user_id: request.params.user_id })
   if (user != null) {
