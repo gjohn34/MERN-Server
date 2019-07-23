@@ -1,10 +1,31 @@
-MERN Server Files
+# GreenBot Express API Server
 
-remember to branch off and push feature branches
+This API is responsible to storing and using data that is provided and retrieved by GreenBot. Authentication with Discord is required for any administrative functions but needs to be worked on further.
 
-make a .env file and add the following field:
+## Installation
 
-  *Leave 'test' as test for now we will change when we decide on our database structure*
-  DB_HOST=mongodb+srv://<Your User Name>:<Your Password>@mern-assessment-database-llifo.azure.mongodb.net/test?retryWrites=true&w=majority
+###### Run an install of all packages.
 
-run npm install
+```bash
+$ npm Install
+```
+
+###### Create .env in the root directory with the format.
+```
+key=value
+```
+
+###### For the following keys:
+
+   * DB_HOST => Available at mongodb. login credentials required for using database.
+   * DB_TEST_HOST => required only for testing purposes.
+   * CLIENT_ID => Available through discord developer portal. Required for API Authentication
+   * CLIENT_SECRET => Also available through discord developer portal.
+
+###### Before deploying bot to Discord, manually insert Discord ID into administrators database. This can be done through the mongodb website or within the mongo console (without the chevrons).
+
+```ruby
+$ use mern
+$ db.authusers.insert({ user_id: <Administrator ID>, username: <Administrator Username>})
+console.log()
+```
