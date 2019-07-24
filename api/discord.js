@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 const fetch = require('node-fetch')
@@ -7,7 +8,7 @@ const AuthUser = require('../models/AuthUsers')
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const redirect = encodeURIComponent('https://stormy-tundra-35633.herokuapp.com/api/discord/callback');
+const redirect = encodeURIComponent(`${process.env.EXPRESS_SERVER_URL}/api/discord/callback`);
 
 
 // From the front end, when a user is trying to access the admin dashboard they are redirected to /api/discord/login. We take our user to discord's
@@ -52,7 +53,7 @@ router.get('/callback', async function(request, response) {
     if (jsonUserData.id == adminUser.user_id) {
       ////fix this please
       const webtoken = jwt.sign({authorized: true}, 'superSecretKey')
-      response.redirect(`https://elated-lovelace-d9b735.netlify.com/api/discord/confirmed/${webtoken}`)
+      response.redirect(`${process.env.FRONT_END_URL}/api/discord/confirmed/${webtoken}`)
     }
   })
   response.sendStatus(404)
