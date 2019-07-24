@@ -4,20 +4,13 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
 
-// var corsOptions = {
-//   origin: process.env.FRONT_END_URL,
-//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-// }
-
-var corsOptions = {
-  origin: function(origin, callback) {
-    console.log(origin)
-    callback(null, true);
-  },
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+function checkJWT(request, response, next) {
+  console.log(request.headers);
+  next
 }
 
-app.use(cors(corsOptions))
+app.use(cors())
+app.use(checkJWT)
 
 app.use(bodyParser.json())
 app.use('/api/discord', require('./api/discord'));
