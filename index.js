@@ -4,7 +4,13 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
 
-app.use(cors())
+// app.use(cors())
+
+var corsOptions = {
+  origin: process.env.FRONT_END_URL,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 app.use(bodyParser.json())
 app.use('/api/discord', require('./api/discord'));
 
@@ -19,12 +25,12 @@ mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true}, (error) => {
   }
 })
 
-app.use('/users', require('./routes/users'))
+app.use('/users', cors(corsOptions) require('./routes/users'))
 app.use('/authUsers', require('./routes/authUsers'))
 app.use('/logs', require('./routes/logs'))
 
 // Route to GET the root. Function retrieves all users and sends back the user object.
-app.get('/', async function(request, response) {
+app.get('/', cors(corsOptions), async function(request, response) {
   const docs = await User.find()
   response.status(200).send(docs)
 })
