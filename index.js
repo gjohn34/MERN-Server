@@ -15,7 +15,6 @@ function checkJWT(request, response, next) {
 }
 
 app.use(cors())
-app.use(checkJWT)
 
 app.use(bodyParser.json())
 app.use('/api/discord', require('./api/discord'));
