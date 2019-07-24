@@ -3,9 +3,11 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
+const jwt = require('jsonwebtoken')
 
 function checkJWT(request, response, next) {
-  console.log(request.headers);
+  const code = jwt.verify(request.headers.authorization, 'superSecretKey')
+  console.log(code);
   next()
 }
 
