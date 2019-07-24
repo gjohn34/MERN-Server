@@ -9,7 +9,15 @@ const app = express()
 //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 
-app.use(cors())
+var corsOptions = {
+  origin: function(origin, callback) {
+    console.log(origin)
+    callback(null, true);
+  },
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(cors(corsOptions))
 
 app.use(bodyParser.json())
 app.use('/api/discord', require('./api/discord'));
