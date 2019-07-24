@@ -6,7 +6,7 @@ const app = express()
 const jwt = require('jsonwebtoken')
 
 function checkJWT(request, response, next) {
-  const code = jwt.verify(request.headers.authorization, 'superSecretKey')
+  const authed = jwt.verify(request.headers.authorization, 'superSecretKey').authed
   console.log(code);
   next()
 }
