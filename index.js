@@ -28,7 +28,7 @@ mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true}, (error) => {
   }
 })
 
-app.use('/users', cors(corsOptions) require('./routes/users'))
+app.use('/users', cors(corsOptions), require('./routes/users'))
 app.use('/authUsers', cors(), logOrigin(), require('./routes/authUsers'))
 app.use('/logs', require('./routes/logs'))
 
