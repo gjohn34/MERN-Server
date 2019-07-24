@@ -4,7 +4,10 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
 
-// app.use(cors())
+function logOrigin(request, response, next) {
+  console.log(request);
+  next()
+}
 
 var corsOptions = {
   origin: process.env.FRONT_END_URL,
@@ -26,7 +29,7 @@ mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true}, (error) => {
 })
 
 app.use('/users', cors(corsOptions) require('./routes/users'))
-app.use('/authUsers', require('./routes/authUsers'))
+app.use('/authUsers', cors(), logOrigin(), require('./routes/authUsers'))
 app.use('/logs', require('./routes/logs'))
 
 // Route to GET the root. Function retrieves all users and sends back the user object.
