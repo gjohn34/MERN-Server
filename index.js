@@ -3,8 +3,19 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
+const jwt = require('jsonwebtoken')
+
+function checkJWT(request, response, next) {
+  const authed = jwt.verify(request.headers.authorization, 'superSecretKey').authed
+  if (authed) {
+    next()
+  } else {
+    response.sendStatus(401)
+  }
+}
 
 app.use(cors())
+
 app.use(bodyParser.json())
 app.use('/api/discord', require('./api/discord'));
 
@@ -19,12 +30,12 @@ mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true}, (error) => {
   }
 })
 
-app.use('/users', require('./routes/users'))
-app.use('/authUsers', require('./routes/authUsers'))
-app.use('/logs', require('./routes/logs'))
+app.use('/users', checkJWT, require('./routes/users'))
+app.use('/authUsers', checkJWT, require('./routes/authUsers'))
+app.use('/logs', checkJWT, require('./routes/logs'))
 
 // Route to GET the root. Function retrieves all users and sends back the user object.
-app.get('/', async function(request, response) {
+app.get('/', checkJWT, async function(request, response) {
   const docs = await User.find()
   response.status(200).send(docs)
 })
