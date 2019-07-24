@@ -5,6 +5,7 @@ const AuthUser = require('../models/AuthUsers')
 
 // Route for GET /authusers/. Function retrieves all Authusers and sends back the user object.
 router.get('/', async function(request, response) {
+  console.log(request.headers);
   const authUsers = await AuthUser.find()
   response.send(authUsers)
 })
@@ -12,6 +13,7 @@ router.get('/', async function(request, response) {
 // Route for POSTing /authusers/. Function collects info from the body, creates
 // a new AuthUser then returns either the new user or an error if that user already exists.
 router.post('/', function(request, response) {
+  console.log(request.headers);
   const newAuthUser = AuthUser.create({
     user_id: request.body.user_id,
     username: request.body.username
@@ -26,6 +28,7 @@ router.post('/', function(request, response) {
 // Confirmation sent back.
 
 router.delete('/:user_id', function(request, response) {
+  console.log(request.headers);
   AuthUser.deleteOne({
     user_id: request.params.user_id
   }).then(result => {
