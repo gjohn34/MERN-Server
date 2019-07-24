@@ -7,7 +7,11 @@ const jwt = require('jsonwebtoken')
 
 function checkJWT(request, response, next) {
   const authed = jwt.verify(request.headers.authorization, 'superSecretKey').authed
-  console.log(authed);
+  if (authed) {
+    next()
+  } else {
+    response.sendStatus(401)
+  }
   next()
 }
 
