@@ -6,7 +6,7 @@ const app = express()
 
 function logOrigin(request, response, next) {
   console.log(request);
-  next()
+  next
 }
 
 var corsOptions = {
