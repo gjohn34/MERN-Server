@@ -12,7 +12,6 @@ function checkJWT(request, response, next) {
   } else {
     response.sendStatus(401)
   }
-  next()
 }
 
 app.use(cors())
