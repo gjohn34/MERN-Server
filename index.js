@@ -6,7 +6,7 @@ const app = express()
 
 function checkJWT(request, response, next) {
   console.log(request.headers);
-  next
+  next()
 }
 
 app.use(cors())
