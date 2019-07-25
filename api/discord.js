@@ -23,7 +23,7 @@ router.get('/login', (req, res) => {
 // sent a data object back that we convert to json.
 //
 router.get('/callback', async function(request, response) {
-  if (!request.query.code) throw new Error('NoCodeProvided')
+  if (!request.query.code) throw new Error('No Code Provided')
   const code = request.query.code;
   const creds = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
   const grant = await fetch(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${code}&redirect_uri=${redirect}`,
