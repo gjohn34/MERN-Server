@@ -86,6 +86,7 @@ router.patch('/:user_id', async function(request, response) {
 router.patch('/:user_id/points', async function(request, response) {
   console.log(request.body);
   let from = request.body.reactor == 0 ? `${request.body.reactor}` : 'reacting to others'
+  console.log(from);
   // const reactor = request.body.reactor ? request.body.reactor : 'other user'
   const points = request.body.points
   const this_user_id = request.params.user_id
