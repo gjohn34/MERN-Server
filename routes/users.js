@@ -84,10 +84,17 @@ router.patch('/:user_id', async function(request, response) {
 // Route to PATCH /users/1234/points. This is for an API call the bot will make when a user
 // message is liked or when they make a new message. The user is found and their points are adjusted.
 router.patch('/:user_id/points', async function(request, response) {
+  // const reactor = request.body.reactor ? request.body.reactor : 'other user'
   let user = await User.findOne({ user_id: request.params.user_id })
   if (user != null) {
     user.points += request.body.points
     await user.save()
+    Log.create({
+      action: 'update: points',
+      user: request.params.user_id,
+      time: new Date,
+      extra: `${request.body.points} points from: ${request.body.reactor || 'admin dashboard'}`
+    })
     response.sendStatus(200)
   } else {
     response.sendStatus(404)
