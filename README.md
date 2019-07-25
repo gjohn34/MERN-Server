@@ -21,6 +21,8 @@ key=value
    * DB_TEST_HOST => required only for testing purposes.
    * CLIENT_ID => Available through discord developer portal. Required for API Authentication
    * CLIENT_SECRET => Also available through discord developer portal.
+   * EXPRESS_SERVER_URL => Can be a localhost or deployed site url
+   * FRONT_END_URL => Can be a localhost or deployed site url
 
 ###### Before deploying bot to Discord, manually insert Discord ID into administrators database. This can be done through the mongodb website or within the mongo console (without the chevrons).
 
