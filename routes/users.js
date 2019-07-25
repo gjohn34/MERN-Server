@@ -95,7 +95,7 @@ router.patch('/:user_id/points', async function(request, response) {
       action: 'update: points',
       user: this_user_id,
       time: new Date,
-      extra: `${points} ${points > 1 ? 'points' : 'point'} from: ${request.body.reactor || 'admin dashboard'}`
+      extra: `${points} ${points > 1 ? 'points' : 'point'} from: ${request.body.reactor || request.body.author || 'admin dashboard'}`
     })
     response.sendStatus(200)
   } else {
