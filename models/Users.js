@@ -8,7 +8,8 @@ const UserSchema = new Schema({
       unique: true
     },
   username: String,
-  points: Number
+  points: Number,
+  extra: String
 })
 
 // UserSchema.path('user_id').index({ unique: true });
