@@ -85,15 +85,17 @@ router.patch('/:user_id', async function(request, response) {
 // message is liked or when they make a new message. The user is found and their points are adjusted.
 router.patch('/:user_id/points', async function(request, response) {
   // const reactor = request.body.reactor ? request.body.reactor : 'other user'
-  let user = await User.findOne({ user_id: request.params.user_id })
+  const points = request.body.points
+  const this_user_id = request.params.user_id
+  let user = await User.findOne({ user_id: this_user_id })
   if (user != null) {
-    user.points += request.body.points
+    user.points += points
     await user.save()
     Log.create({
       action: 'update: points',
-      user: request.params.user_id,
+      user: this_user_id,
       time: new Date,
-      extra: `${request.body.points} points from: ${request.body.reactor || 'admin dashboard'}`
+      extra: `${points} ${points > 1 ? 'points' : 'point'} from: ${request.body.reactor || 'admin dashboard'}`
     })
     response.sendStatus(200)
   } else {
